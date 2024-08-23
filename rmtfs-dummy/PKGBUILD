@@ -24,7 +24,7 @@ source=(
 )
 sha256sums=('SKIP'
             '0c2f26d40d9d18e3089c6d836b64231c4f7e0c1ca41686fe7c9d1eb495dc6bbe'
-            'e3018310920261f56e7eb57f4d41ae781157771317764710b516079bf843bf5b')
+            '928a3f2d1e75cc8eabb354f57bb864e8d953006c404b1ff01c0e35defbf369a9')
 
 pkgver() {
     cd "rmtfs"

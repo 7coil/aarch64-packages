@@ -1,0 +1,41 @@
+# Pointing to `linux-msm` org instead of `andersson`
+# 
+# Based on PKGBUILDs at
+# - https://github.com/andersson/arch-packages
+pkgname=qmic
+pkgver=1.0
+pkgrel=1
+pkgdesc="Qualcomm QMI IDL compiler (unofficial)"
+arch=('armv7h' 'aarch64' 'x86_64')
+url="https://github.com/linux-msm/qmic"
+license=('BSD')
+groups=()
+makedepends=('git')
+checkdepends=()
+optdepends=()
+provides=()
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=
+changelog=
+source=('git+https://github.com/linux-msm/qmic.git')
+noextract=()
+md5sums=('SKIP')
+validpgpkeys=()
+
+pkgver() {
+	cd "$pkgname"
+	git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+build() {
+	cd "$pkgname"
+	make
+}
+
+package() {
+	cd "$pkgname"
+	make DESTDIR="$pkgdir" prefix="/usr" install
+}

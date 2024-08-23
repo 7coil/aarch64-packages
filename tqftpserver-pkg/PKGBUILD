@@ -1,0 +1,43 @@
+# Meson version of `tqftpserv`, pointing to `linux-msm` org instead of `andersson`
+# 
+# Based on PKGBUILDs at
+# - https://github.com/andersson/arch-packages
+pkgname=tqftpserv
+pkgver=1.0
+pkgrel=1
+pkgdesc="Qualcomm QRTR TFTP service"
+arch=('armv7h' 'aarch64')
+url="https://github.com/linux-msm/tqftpserv"
+license=('BSD')
+groups=()
+makedepends=('git' 'qmic')
+checkdepends=()
+optdepends=()
+depends=('qrtr')
+provides=()
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=
+changelog=
+source=('git+https://github.com/linux-msm/tqftpserv.git')
+noextract=()
+md5sums=('SKIP')
+validpgpkeys=()
+
+pkgver() {
+	cd "$pkgname"
+	git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+build() {
+	cd "$pkgname"
+	meson setup --prefix=/usr --buildtype=plain build
+	meson compile -C build
+}
+
+package() {
+	cd "$pkgname"
+	meson install -C build --destdir "$pkgdir"
+}

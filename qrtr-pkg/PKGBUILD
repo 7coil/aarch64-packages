@@ -1,0 +1,43 @@
+# Meson version of `qrtr`, pointing to `linux-msm` org instead of `andersson`
+# 
+# Based on PKGBUILDs at
+# - https://github.com/andersson/arch-packages
+pkgname=qrtr
+pkgver=test.r0.ef44ad1
+pkgrel=1
+pkgdesc="Qualcomm QRTR name service"
+arch=('armv7h' 'aarch64')
+url="https://github.com/linux-msm/qrtr"
+license=('BSD')
+groups=()
+#depends=('libconfig')
+makedepends=('git' 'meson')
+checkdepends=()
+optdepends=()
+provides=()
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=
+changelog=
+source=('git+https://github.com/linux-msm/qrtr.git')
+noextract=()
+md5sums=('SKIP')
+validpgpkeys=()
+
+pkgver() {
+	cd "$pkgname"
+	git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+build() {
+	cd "$pkgname"
+	meson setup --prefix=/usr --buildtype=plain build -Dqrtr-ns=enabled
+	meson compile -C build
+}
+
+package() {
+	cd "$pkgname"
+	meson install -C build --destdir "$pkgdir"
+}
